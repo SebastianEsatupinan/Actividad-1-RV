@@ -5,12 +5,11 @@ using UnityEngine;
 public class MovimientoPlayer : MonoBehaviour
 {
     public float MovementSpeed = 5.0f;
-    //private Animator anim;
     private float x, y;
 
     void Start()
     {
-        //anim = GetComponent<Animator>();
+        // Aquí podrías inicializar cualquier otra cosa que necesites.
     }
 
     void Update()
@@ -18,8 +17,15 @@ public class MovimientoPlayer : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
 
-        //anim.SetFloat("VelX", x);
-        //anim.SetFloat("VelY", y);
+        // Restringe el movimiento a solo una dirección a la vez
+        if (Mathf.Abs(x) > Mathf.Abs(y))
+        {
+            y = 0; // Anula el movimiento vertical si el movimiento horizontal es mayor
+        }
+        else
+        {
+            x = 0; // Anula el movimiento horizontal si el movimiento vertical es mayor
+        }
 
         Vector3 movement = new Vector3(x, 0, y) * MovementSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
